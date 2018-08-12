@@ -12,27 +12,27 @@ new
 		0xFE7B43ff, 0xFF0606ff, 0xFF0606ff,
 		0xFF0000FF, 0xFF0000FF
 	};
-	
+
 public OnPlayerConnect(playerid)
 {
-    HizBar[playerid][0] = CreatePlayerTextDraw(playerid,632.000000, 414.000000, "I");
+	HizBar[playerid][0] = CreatePlayerTextDraw(playerid,632.000000, 414.000000, "I");
 	HizBar[playerid][1] = CreatePlayerTextDraw(playerid,629.000000, 414.000000, "I");
-    HizBar[playerid][2] = CreatePlayerTextDraw(playerid,626.000000, 414.000000, "I");
-    HizBar[playerid][3] = CreatePlayerTextDraw(playerid,623.000000, 414.000000, "I");
-    HizBar[playerid][4] = CreatePlayerTextDraw(playerid,620.000000, 414.000000, "I");
-    HizBar[playerid][5] = CreatePlayerTextDraw(playerid,617.000000, 414.000000, "I");
-    HizBar[playerid][6] = CreatePlayerTextDraw(playerid,614.000000, 414.000000, "I");
-    HizBar[playerid][7] = CreatePlayerTextDraw(playerid,611.000000, 414.000000, "I");
-    HizBar[playerid][8] = CreatePlayerTextDraw(playerid,608.000000, 414.000000, "I");
-    HizBar[playerid][9] = CreatePlayerTextDraw(playerid,605.000000, 414.000000, "I");
-    HizBar[playerid][10] = CreatePlayerTextDraw(playerid,602.000000, 414.000000, "I");
-    HizBar[playerid][11] = CreatePlayerTextDraw(playerid,599.000000, 414.000000, "I");
-    HizBar[playerid][12] = CreatePlayerTextDraw(playerid,596.000000, 414.000000, "I");
-    HizBar[playerid][13] = CreatePlayerTextDraw(playerid,593.000000, 414.000000, "I");
-    HizBar[playerid][14] = CreatePlayerTextDraw(playerid,590.000000, 414.000000, "I");
-    HizBar[playerid][15] = CreatePlayerTextDraw(playerid,587.000000, 414.000000, "I");
-    for (new i; i != 16; i++)
-    {
+	HizBar[playerid][2] = CreatePlayerTextDraw(playerid,626.000000, 414.000000, "I");
+	HizBar[playerid][3] = CreatePlayerTextDraw(playerid,623.000000, 414.000000, "I");
+	HizBar[playerid][4] = CreatePlayerTextDraw(playerid,620.000000, 414.000000, "I");
+	HizBar[playerid][5] = CreatePlayerTextDraw(playerid,617.000000, 414.000000, "I");
+	HizBar[playerid][6] = CreatePlayerTextDraw(playerid,614.000000, 414.000000, "I");
+	HizBar[playerid][7] = CreatePlayerTextDraw(playerid,611.000000, 414.000000, "I");
+	HizBar[playerid][8] = CreatePlayerTextDraw(playerid,608.000000, 414.000000, "I");
+	HizBar[playerid][9] = CreatePlayerTextDraw(playerid,605.000000, 414.000000, "I");
+	HizBar[playerid][10] = CreatePlayerTextDraw(playerid,602.000000, 414.000000, "I");
+	HizBar[playerid][11] = CreatePlayerTextDraw(playerid,599.000000, 414.000000, "I");
+	HizBar[playerid][12] = CreatePlayerTextDraw(playerid,596.000000, 414.000000, "I");
+	HizBar[playerid][13] = CreatePlayerTextDraw(playerid,593.000000, 414.000000, "I");
+	HizBar[playerid][14] = CreatePlayerTextDraw(playerid,590.000000, 414.000000, "I");
+	HizBar[playerid][15] = CreatePlayerTextDraw(playerid,587.000000, 414.000000, "I");
+	for (new i; i != 16; i++)
+	{
 		PlayerTextDrawAlignment(playerid,HizBar[playerid][i], 2);
 		PlayerTextDrawBackgroundColor(playerid,HizBar[playerid][i], 255);
 		PlayerTextDrawFont(playerid,HizBar[playerid][i], 1);
@@ -98,21 +98,21 @@ public OnPlayerStateChange(playerid, newstate, oldstate)
 		{
 			PlayerTextDrawColor(playerid, HizBar[playerid][i], 0x66666644);
 			PlayerTextDrawShow(playerid, HizBar[playerid][i]);
-			PlayerTextDrawShow(playerid, HizText[playerid]);
 		}
+		PlayerTextDrawShow(playerid, HizText[playerid]);
 	}else
 	{
 		for(new i; i != 16; i++)
 		{
 			PlayerTextDrawHide(playerid, HizBar[playerid][i]);
-			PlayerTextDrawHide(playerid, HizText[playerid]);
 		}
+		PlayerTextDrawHide(playerid, HizText[playerid]);
 	}
 	return 1;
 }
 stock GetVehicleSpeed(vehicleid)
 {
-	new Float:Pos[3],Float:ARRAY ;
+	new Float:Pos[3], Float:ARRAY;
 	GetVehicleVelocity(vehicleid, Pos[0], Pos[1], Pos[2]);
 	ARRAY = floatsqroot(Pos[0]*Pos[0] + Pos[1]*Pos[1] + Pos[2]*Pos[2])*180;
 	return floatround(ARRAY,floatround_round);
