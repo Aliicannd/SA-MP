@@ -47,7 +47,7 @@ public ReactionTest()
 			format(ReactionTestInfo[rQuiz], 10, "%d%d%s%s%s%d%s%d%s%d",
 			random(5), random(9), RandomLetter[random(sizeof(RandomLetter))], RandomLetter[random(sizeof(RandomLetter))], RandomLetter[random(sizeof(RandomLetter))], random(9) , RandomLetter[random(sizeof(RandomLetter))], random(9) , RandomLetter[random(sizeof(RandomLetter))], random(9));
 			ReactionTestInfo[rMoney] = 7000, ReactionTestInfo[rScore] = 30;
-        }
+		}
 		case 5..8:
 		{
 			format(ReactionTestInfo[rQuiz], 10, "%d%d%d%d%s%d%s%d%d%d",
