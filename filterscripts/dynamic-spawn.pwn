@@ -1,3 +1,4 @@
+#define FILTERSCRIPT
 #include <a_samp>
 #include <a_mysql>
 #include <zcmd>
@@ -401,12 +402,12 @@ new SAZones[][e_sazone] = {
 };
 stock SpawnEkle(playerid) {
 	new i = Iter_Free(SpawnIter);
-	if(i == -1) return SendClientMessage(playerid,-1,"Spawn sýnýrý dolmuþ.");
+	if(i == -1) return SendClientMessage(playerid,-1,"Spawn sÃ½nÃ½rÃ½ dolmuÃ¾.");
 	GetPlayerPos(playerid, SpawnData[i][spawnX], SpawnData[i][spawnY], SpawnData[i][spawnZ]);
 	GetPlayerFacingAngle(playerid, SpawnData[i][spawnA]);
 	SpawnData[i][spawnPickup] = CreateDynamicPickup(1239, 1, SpawnData[i][spawnX], SpawnData[i][spawnY], SpawnData[i][spawnZ], 0, 0, -1);
 	new str[256];
-	format(str, sizeof(str), "{2590D4}Spawn Noktasý\n{FFFFFF}%s",GetZoneName(SpawnData[i][spawnX], SpawnData[i][spawnY], SpawnData[i][spawnZ]));
+	format(str, sizeof(str), "{2590D4}Spawn NoktasÃ½\n{FFFFFF}%s",GetZoneName(SpawnData[i][spawnX], SpawnData[i][spawnY], SpawnData[i][spawnZ]));
 	SpawnData[i][spawn3D] = CreateDynamic3DTextLabel(str, 0xFFFFFFFF, SpawnData[i][spawnX], SpawnData[i][spawnY], SpawnData[i][spawnZ], 50.0, INVALID_PLAYER_ID, INVALID_VEHICLE_ID, 0, 0, 0, -1);
 	Iter_Add(SpawnIter, i);
 
@@ -439,7 +440,7 @@ public SpawnYukle()
 	new rows = cache_num_rows();
 	if(!rows)
 	{
-		print("Hata: Spawn noktasi bulunamadi, tekrar baslatýn.");
+		print("Hata: Spawn noktasi bulunamadi, tekrar baslatÃ½n.");
 		mysql_tquery(exConnect, "INSERT INTO `spawnlar` (`ID`, `SpawnX`, `SpawnY`, `SpawnZ`, `SpawnA`) VALUES (0, '0', '5', '0', '90.0000')");
 		SendRconCommand("exit");
 	}else{
@@ -453,7 +454,7 @@ public SpawnYukle()
 			Iter_Add(SpawnIter, x);
 			SpawnData[x][spawnPickup] = CreateDynamicPickup(1239, 1, SpawnData[x][spawnX], SpawnData[x][spawnY], SpawnData[x][spawnZ], 0, 0, -1);
 			new str[256];
-			format(str, sizeof(str), "{2590D4}Spawn Noktasý\n{FFFFFF}%s",GetZoneName(SpawnData[x][spawnX], SpawnData[x][spawnY], SpawnData[x][spawnZ]));
+			format(str, sizeof(str), "{2590D4}Spawn NoktasÃ½\n{FFFFFF}%s",GetZoneName(SpawnData[x][spawnX], SpawnData[x][spawnY], SpawnData[x][spawnZ]));
 			SpawnData[x][spawn3D] = CreateDynamic3DTextLabel(str, 0xFFFFFFFF, SpawnData[x][spawnX], SpawnData[x][spawnY], SpawnData[x][spawnZ], 50.0, INVALID_PLAYER_ID, INVALID_VEHICLE_ID, 0, 0, 0, -1);
 			SpawnData[x][spawnIcon] = CreateDynamicMapIcon(SpawnData[x][spawnX], SpawnData[x][spawnY], SpawnData[x][spawnZ], 36, 0, 0, 0, -1, 200.0);
             loaded++;
@@ -468,7 +469,7 @@ public OnFilterScriptInit()
 	mysql_log(ERROR | WARNING);
 	if (exConnect == MYSQL_INVALID_HANDLE || mysql_errno(exConnect) != 0)
 	{
-		print("» MySQL baðlantýsý yapýlamadý «");
+		print("Â» MySQL baÃ°lantÃ½sÃ½ yapÃ½lamadÃ½ Â«");
 		SendRconCommand("exit");
 		return 1;
 	}
@@ -485,18 +486,18 @@ public OnPlayerSpawn(playerid)
 }
 CMD:spawnekle(playerid, params[])
 {
-	if(!IsPlayerAdmin(playerid)) return SendClientMessage(playerid,-1,"Bu komutu kullanabilmek için admin olmalýsýn.");
+	if(!IsPlayerAdmin(playerid)) return SendClientMessage(playerid,-1,"Bu komutu kullanabilmek iÃ§in admin olmalÃ½sÃ½n.");
 	SpawnEkle(playerid);
 	return 1;
 }
 
 CMD:spawnsil(playerid, params[])
 {
-	if(!IsPlayerAdmin(playerid)) return SendClientMessage(playerid,-1,"Bu komutu kullanabilmek için admin olmalýsýn.");
+	if(!IsPlayerAdmin(playerid)) return SendClientMessage(playerid,-1,"Bu komutu kullanabilmek iÃ§in admin olmalÃ½sÃ½n.");
 	new id;
-	if(sscanf(params, "i", id)) return SendClientMessage(playerid,-1,"Kullaným: /spawnsil [id]");
-	if(!(0 <= id <= MAX_SPAWNS)) return SendClientMessage(playerid,-1,"Geçersiz ID.");
-	if(!Iter_Contains(SpawnIter, id)) return SendClientMessage(playerid,-1,"Böyle bir spawn yok.");
+	if(sscanf(params, "i", id)) return SendClientMessage(playerid,-1,"KullanÃ½m: /spawnsil [id]");
+	if(!(0 <= id <= MAX_SPAWNS)) return SendClientMessage(playerid,-1,"GeÃ§ersiz ID.");
+	if(!Iter_Contains(SpawnIter, id)) return SendClientMessage(playerid,-1,"BÃ¶yle bir spawn yok.");
 	SpawnSil(id);
 	return 1;
 }
