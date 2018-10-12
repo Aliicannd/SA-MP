@@ -1,3 +1,8 @@
+/*
+	Yet Another Banking System by rootcause
+	MySQL R40 Version
+	Topic: https://forum.sa-mp.com/showthread.php?t=596578
+*/
 #define 	FILTERSCRIPT
 #include 	<a_samp>
 #include    <a_mysql>
