@@ -42,20 +42,20 @@ public OnPlayerDisconnect(playerid, reason)
 	    new str[144];
 	    format(str, sizeof(str), "Duel » {FFFFFF}%s duelloda %s'yı mağlup etti. Silahlar: {FF9900}%s & %s {FFFFFF}Bahis: {FF9900}$%i {FFFFFF}(%s)", PlayerName(DuelInfo[playerid][d_Rakip]), PlayerName(playerid), ReturnWeaponNameEx(DuelInfo[playerid][d_Weapon]),ReturnWeaponNameEx(DuelInfo[playerid][d_Weapon2]), DuelInfo[playerid][d_Bet], ConvertTime(GetTickCount() - DuelInfo[playerid][d_Tick]));
 	    SendClientMessageToAll(0x99CC00FF, str);
-
-        DuelInfo[DuelInfo[playerid][d_Rakip]][d_induel] = false;
+	    
+	    DuelInfo[DuelInfo[playerid][d_Rakip]][d_induel] = false;
 	    DuelInfo[DuelInfo[playerid][d_Rakip]][d_Rakip] = INVALID_PLAYER_ID;
 	    DuelInfo[DuelInfo[playerid][d_Rakip]][d_Weapon] = 0;
 	    DuelInfo[DuelInfo[playerid][d_Rakip]][d_Weapon2] = 0;
 	    DuelInfo[DuelInfo[playerid][d_Rakip]][d_Bet] = 0;
 	    DuelInfo[DuelInfo[playerid][d_Rakip]][d_Map] = 0;
-
-        DuelInfo[playerid][d_induel] = false;
-        DuelInfo[playerid][d_Rakip] = INVALID_PLAYER_ID;
-        DuelInfo[playerid][d_Weapon] = 0;
-        DuelInfo[playerid][d_Weapon2] = 0;
-        DuelInfo[playerid][d_Bet] = 0;
-        DuelInfo[playerid][d_Map] = 0;
+	    
+	    DuelInfo[playerid][d_induel] = false;
+	    DuelInfo[playerid][d_Rakip] = INVALID_PLAYER_ID;
+	    DuelInfo[playerid][d_Weapon] = 0;
+	    DuelInfo[playerid][d_Weapon2] = 0;
+	    DuelInfo[playerid][d_Bet] = 0;
+	    DuelInfo[playerid][d_Map] = 0;
 	}
 	KillTimer(Duello_Timer[playerid]);
 	return 1;
@@ -68,7 +68,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 	    {
 	        new weaponid;
 	        switch(listitem)
-			{
+		{
 				case 0: weaponid = 9;
 				case 1: weaponid = 16;
 				case 2: weaponid = 18;
@@ -208,7 +208,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			    {
 					SetPlayerPos(playerid, 1097.1639, 1063.6047, 10.8359);
 					SetPlayerVirtualWorld(playerid, playerid+10);
-                    SetCameraBehindPlayer(playerid);
+                    			SetCameraBehindPlayer(playerid);
 
 					SetPlayerPos(DuelInfo[playerid][d_Rakip], 1081.3628, 1080.4985, 10.8359);
 					SetPlayerVirtualWorld(DuelInfo[playerid][d_Rakip], playerid+10);
@@ -218,7 +218,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			    {
 					SetPlayerPos(playerid, 3374.6348, -1734.9648, 9.2609);
 					SetPlayerVirtualWorld(playerid, playerid+10);
-                    SetCameraBehindPlayer(playerid);
+                    			SetCameraBehindPlayer(playerid);
 
 					SetPlayerPos(DuelInfo[playerid][d_Rakip], 3341.7039, -1766.2764, 9.2609);
 					SetPlayerVirtualWorld(DuelInfo[playerid][d_Rakip], playerid+10);
@@ -229,7 +229,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					SetPlayerPos(playerid, -1131.9055, 1057.8958, 1346.4146);
 					SetPlayerInterior(playerid, 10);
 					SetPlayerVirtualWorld(playerid, playerid+10);
-                    SetCameraBehindPlayer(playerid);
+                    			SetCameraBehindPlayer(playerid);
 
 					SetPlayerPos(DuelInfo[playerid][d_Rakip], -974.6671, 1060.8036, 1345.6719);
 					SetPlayerInterior( DuelInfo[playerid][d_Rakip], 10);
@@ -248,8 +248,8 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			KillTimer(Duello_Timer[DuelInfo[playerid][d_Rakip]]);
 	 		Duello_Timer[DuelInfo[playerid][d_Rakip]] = SetTimerEx("Duello_Sayim", 1000, true, "i", DuelInfo[playerid][d_Rakip]);
 
-	        DuelInfo[DuelInfo[playerid][d_Rakip]][d_induel] = true;
-	        DuelInfo[playerid][d_induel] = true;
+	        	DuelInfo[DuelInfo[playerid][d_Rakip]][d_induel] = true;
+	        	DuelInfo[playerid][d_induel] = true;
 			return 1;
 	    }
 	}
@@ -259,7 +259,7 @@ public OnPlayerCommandText(playerid, cmdtext[])
 {
 	if(DuelInfo[playerid][d_induel])
 	{
-	    SendClientMessage(playerid,0xFF0000FF, "Hata » {FFFFFF}Su an duelloda bulunuyorsunuz. Duello bitmeden komut kullanamazsınız.");
+	    	SendClientMessage(playerid,0xFF0000FF, "Hata » {FFFFFF}Su an duelloda bulunuyorsunuz. Duello bitmeden komut kullanamazsınız.");
 		return 1;
 	}
 	return 1;
@@ -294,9 +294,9 @@ ReturnWeaponNameEx(weaponid)
 	{
 	    case 0: weaponstr = "Fist";
 	    case 18: weaponstr = "Molotov Cocktail";
-        case 44: weaponstr = "Night Vision Goggles";
-        case 45: weaponstr = "Thermal Goggles";
-        default: GetWeaponName(weaponid, weaponstr, sizeof(weaponstr));
+            case 44: weaponstr = "Night Vision Goggles";
+            case 45: weaponstr = "Thermal Goggles";
+            default: GetWeaponName(weaponid, weaponstr, sizeof(weaponstr));
 	}
 	return weaponstr;
 }
@@ -307,7 +307,7 @@ ReturnMapName(mapid)
 	{
 	    case 0: mapstr = "T 25";
 	    case 1: mapstr = "Stadium";
-        case 2: mapstr = "RC Battlefield";
+      	    case 2: mapstr = "RC Battlefield";
 	}
 	return mapstr;
 }
@@ -317,19 +317,19 @@ public Duello_Sayim(playerid)
 	switch(Duello_Sayac[playerid])
 	{
 	    case 0:
-		{
-			GameTextForPlayer(playerid, "~r~~h~Basla!", 2000, 5),PlayerPlaySound(playerid,1057,0.0,0.0,0.0);
-			KillTimer(Duello_Timer[playerid]);
-			TogglePlayerControllable(playerid, true);
-			DuelInfo[playerid][d_Tick] = GetTickCount();
-			DuelInfo[DuelInfo[playerid][d_Rakip]][d_Tick] = GetTickCount();
-		}
+	    {
+	    	GameTextForPlayer(playerid, "~r~~h~Basla!", 2000, 5),PlayerPlaySound(playerid,1057,0.0,0.0,0.0);
+		KillTimer(Duello_Timer[playerid]);
+		TogglePlayerControllable(playerid, true);
+		DuelInfo[playerid][d_Tick] = GetTickCount();
+		DuelInfo[DuelInfo[playerid][d_Rakip]][d_Tick] = GetTickCount();
+	    }
 	    case 1: GameTextForPlayer(playerid, "~r~~h~~h~~h~1", 1000, 5),PlayerPlaySound(playerid,1056,0.0,0.0,0.0);
 	    case 2: GameTextForPlayer(playerid, "~b~~h~~h~~h~2", 1000, 5),PlayerPlaySound(playerid,1056,0.0,0.0,0.0);
 	    case 3: GameTextForPlayer(playerid, "~g~~h~~h~~h~3", 1000, 5),PlayerPlaySound(playerid,1056,0.0,0.0,0.0);
 	    case 4: GameTextForPlayer(playerid, "~g~~h~~h~4", 1000, 5),PlayerPlaySound(playerid,1056,0.0,0.0,0.0);
 	    case 5: GameTextForPlayer(playerid, "~g~~h~5", 1000, 5),PlayerPlaySound(playerid,1056,0.0,0.0,0.0);
-		case 6: GameTextForPlayer(playerid, "~g~HAZIR", 1000, 5);
+	    case 6: GameTextForPlayer(playerid, "~g~HAZIR", 1000, 5);
 	}
 	Duello_Sayac[playerid]--;
 	return 1;
@@ -344,7 +344,7 @@ public OnPlayerDeath(playerid, killerid, reason)
 	    format(string, sizeof(string), "Duel » {FFFFFF}%s duelloda %s'yı mağlup etti. Silahlar: {FF9900}%s & %s {FFFFFF}Bahis: {FF9900}$%i {FFFFFF}(%s)", PlayerName(DuelInfo[playerid][d_Rakip]), PlayerName(playerid), ReturnWeaponNameEx(DuelInfo[playerid][d_Weapon]),ReturnWeaponNameEx(DuelInfo[playerid][d_Weapon2]), DuelInfo[playerid][d_Bet], ConvertTime(GetTickCount() - DuelInfo[playerid][d_Tick]));
 	    SendClientMessageToAll(0x99CC00FF, string);
 
-        DuelInfo[DuelInfo[playerid][d_Rakip]][d_induel] = false;
+            DuelInfo[DuelInfo[playerid][d_Rakip]][d_induel] = false;
 	    DuelInfo[DuelInfo[playerid][d_Rakip]][d_Rakip] = INVALID_PLAYER_ID;
 	    DuelInfo[DuelInfo[playerid][d_Rakip]][d_Weapon] = 0;
 	    DuelInfo[DuelInfo[playerid][d_Rakip]][d_Weapon2] = 0;
@@ -372,7 +372,7 @@ public OnPlayerSpawn(playerid)
 	    format(string, sizeof(string), "Duel » {FFFFFF}%s duelloda %s'yı mağlup etti. Silahlar: {FF9900}%s & %s {FFFFFF}Bahis: {FF9900}$%i {FFFFFF}(%s)", PlayerName(DuelInfo[playerid][d_Rakip]), PlayerName(playerid), ReturnWeaponNameEx(DuelInfo[playerid][d_Weapon]),ReturnWeaponNameEx(DuelInfo[playerid][d_Weapon2]), DuelInfo[playerid][d_Bet], ConvertTime(GetTickCount() - DuelInfo[playerid][d_Tick]));
 	    SendClientMessageToAll(0x99CC00FF, string);
 
-        DuelInfo[DuelInfo[playerid][d_Rakip]][d_induel] = false;
+       	    DuelInfo[DuelInfo[playerid][d_Rakip]][d_induel] = false;
 	    DuelInfo[DuelInfo[playerid][d_Rakip]][d_Rakip] = INVALID_PLAYER_ID;
 	    DuelInfo[DuelInfo[playerid][d_Rakip]][d_Weapon] = 0;
 	    DuelInfo[DuelInfo[playerid][d_Rakip]][d_Weapon2] = 0;
