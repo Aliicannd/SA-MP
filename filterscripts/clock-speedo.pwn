@@ -15,7 +15,7 @@ new
 public OnPlayerConnect(playerid)
 {
     L_draw[playerid][0] = CreatePlayerTextDraw(playerid,45.00, 410.00, "");
-	L_draw[playerid][1] = CreatePlayerTextDraw(playerid,45.00, 410.00, "10");
+    L_draw[playerid][1] = CreatePlayerTextDraw(playerid,45.00, 410.00, "10");
     L_draw[playerid][2] = CreatePlayerTextDraw(playerid,32.00, 399.00, "20");
     L_draw[playerid][3] = CreatePlayerTextDraw(playerid,25.00, 384.00, "40");
     L_draw[playerid][4] = CreatePlayerTextDraw(playerid,25.00, 368.00, "60");
@@ -46,7 +46,7 @@ public OnPlayerDisconnect(playerid, reason)
 {
 	for (new i = 1; i != 16; i++)
 	{
-	    PlayerTextDrawHide(playerid, L_draw[playerid][i]);
+		PlayerTextDrawHide(playerid, L_draw[playerid][i]);
 		PlayerTextDrawDestroy(playerid,L_draw[playerid][i]) ;
 	}
 	return 1;
