@@ -22,8 +22,8 @@ enum Duel
 	Rounds,
 	TotalRounds,
 	Float:DuelPos_X,
-    Float:DuelPos_Y,
-    Float:DuelPos_Z,
+    	Float:DuelPos_Y,
+    	Float:DuelPos_Z,
 	RoundsWon,
 	Timer,
 	World
@@ -148,11 +148,11 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			new str[50], str2[512];
 			DuelInfo[playerid][WeaponOne] = Weapon[listitem][WeaponID];
 			for(new i; i < sizeof(Weapon); i++)
-		    {
+		    	{
 				format(str,sizeof(str),"%s\n",Weapon[i][WeaponName]);
 				strcat(str2, str);
-		    }
-		    ShowPlayerDialog(playerid, DIALOG_DUEL_WEAP2, DIALOG_STYLE_LIST, "Duel Weapon 2", str2, "Next", "Cancel");
+		    	}
+		    	ShowPlayerDialog(playerid, DIALOG_DUEL_WEAP2, DIALOG_STYLE_LIST, "Duel Weapon 2", str2, "Next", "Cancel");
 		}
 	}
 	if(dialogid == DIALOG_DUEL_WEAP2)
@@ -162,21 +162,21 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			new str[50], str2[512];
 			DuelInfo[playerid][WeaponOne] = Weapon[listitem][WeaponID];
 			for(new i; i < sizeof(Weapon); i++)
-		    {
+		    	{
 				format(str,sizeof(str),"%s\n",Weapon[i][WeaponName]);
 				strcat(str2, str);
-		    }
-		    ShowPlayerDialog(playerid, DIALOG_DUEL_WEAP2, DIALOG_STYLE_LIST, "Duel Weapon 2", str2, "Next", "Cancel");
+		    	}
+		    	ShowPlayerDialog(playerid, DIALOG_DUEL_WEAP2, DIALOG_STYLE_LIST, "Duel Weapon 2", str2, "Next", "Cancel");
 		}else if(response)
 		{
 			new str[50], str2[512];
 			DuelInfo[playerid][WeaponTwo] = Weapon[listitem][WeaponID];
 			for(new i; i < sizeof(Weapon); i++)
-		    {
+		    	{
 				format(str,sizeof(str),"%s\n",Weapon[i][WeaponName]);
 				strcat(str2, str);
-		    }
-		    ShowPlayerDialog(playerid, DIALOG_DUEL_WEAP3, DIALOG_STYLE_LIST, "Duel Weapon 3", str2, "Next", "Back");
+		    	}
+		    	ShowPlayerDialog(playerid, DIALOG_DUEL_WEAP3, DIALOG_STYLE_LIST, "Duel Weapon 3", str2, "Next", "Back");
 		}
 	}
 	if(dialogid == DIALOG_DUEL_WEAP3)
@@ -189,8 +189,8 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			{
 				format(str,sizeof(str),"%s\n",Weapon[i][WeaponName]);
 				strcat(str2, str);
-		    }
-		    ShowPlayerDialog(playerid, DIALOG_DUEL_WEAP3, DIALOG_STYLE_LIST, "Duel Weapon 3", str2, "Next", "Back");
+		    	}
+		    	ShowPlayerDialog(playerid, DIALOG_DUEL_WEAP3, DIALOG_STYLE_LIST, "Duel Weapon 3", str2, "Next", "Back");
 		}else if(response)
 		{
 			DuelInfo[playerid][WeaponThree] = Weapon[listitem][WeaponID];
