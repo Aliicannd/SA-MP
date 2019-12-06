@@ -1,5 +1,4 @@
 #define FILTERSCRIPT
-
 #include <a_samp>
 #include <a_mysql>
 #include <foreach>
@@ -32,10 +31,10 @@ public OnFilterScriptInit()
 	handle = mysql_connect(SQL_HOST, SQL_USER, SQL_PASSWORD, SQL_DBNAME);
 	mysql_log(ERROR | WARNING);
 	if(mysql_errno() != 0) return print("MySQL Bağlantı Hatasi!");
-	
+
 	mysql_tquery(handle, "CREATE TABLE IF NOT EXISTS `mesajlar` (`id` INT(11), `mesaj` VARCHAR(128), `ekleyen` VARCHAR(24), PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
 	mysql_tquery(handle, "SELECT * FROM `mesajlar`", "MesajYukle");
-	
+
 	MesajTimer = SetTimer("OtomatikMesajYolla", 60000*MESAJ_DAKIKA, true);
 	return 1;
 }
@@ -69,13 +68,13 @@ public MesajYukle()
 forward OtomatikMesajYolla();
 public OtomatikMesajYolla()
 {
-    if(Iter_Count(Mesajlar) > 1)
-    {
+	if(Iter_Count(Mesajlar) > 1)
+	{
 		new id = Iter_Random(Mesajlar);
 		new mesaj[156];
 		format(mesaj, sizeof(mesaj), ""#MESAJ_PREFIX"%s", MesajData[id][Mesaj]);
 		SendClientMessageToAll(MESAJ_RENK, mesaj);
-    }
+	}
 	return 1;
 }
 CMD:mesajekle(playerid, params[])
@@ -88,7 +87,7 @@ CMD:mesajekle(playerid, params[])
 	Iter_Add(Mesajlar, id);
 	GetPlayerName(playerid, MesajData[id][Ekleyen], MAX_PLAYER_NAME);
 	format(MesajData[id][Mesaj], 128, mesaj);
-	
+
 	new query[256];
 	mysql_format(handle, query, sizeof(query), "INSERT INTO `mesajlar` (`id`, `mesaj`, `ekleyen`) VALUES ('%d', '%e', '%e')", id, MesajData[id][Mesaj], MesajData[id][Ekleyen]);
 	mysql_tquery(handle, query);
