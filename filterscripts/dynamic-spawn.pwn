@@ -15,7 +15,8 @@ new MySQL:exConnect;
 
 #define	MAX_SPAWNS	21
 
-enum spawn_data {
+enum spawn_data
+{
 	Float: spawnX,
 	Float: spawnY,
 	Float: spawnZ,
@@ -24,7 +25,6 @@ enum spawn_data {
 	spawnIcon,
 	Text3D: spawn3D
 };
-
 new SpawnData[MAX_SPAWNS][spawn_data];
 new Iterator: SpawnIter<MAX_SPAWNS>;
 
@@ -33,7 +33,8 @@ enum e_sazone
 	SAZONE_NAME[28],
 	Float: SAZONE_AREA[6]
 };
-new SAZones[][e_sazone] = {
+new SAZones[][e_sazone] =
+{
 	{"The Big Ear",	                {-410.00,1403.30,-3.00,-137.90,1681.20,200.00}},
 	{"Aldea Malvada",               {-1372.10,2498.50,0.00,-1277.50,2615.30,200.00}},
 	{"Angel Pine",                  {-2324.90,-2584.20,-6.10,-1964.20,-2212.10,200.00}},
@@ -400,14 +401,16 @@ new SAZones[][e_sazone] = {
 	{"Flint County",                {-1213.90,-2892.90,-242.90,44.60,-768.00,900.00}},
 	{"Whetstone",                   {-2997.40,-2892.90,-242.90,-1213.90,-1115.50,900.00}}
 };
-stock SpawnEkle(playerid) {
+
+SpawnEkle(playerid)
+{
 	new i = Iter_Free(SpawnIter);
-	if(i == -1) return SendClientMessage(playerid,-1,"Spawn sýnýrý dolmuþ.");
+	if(i == -1) return SendClientMessage(playerid,-1,"Spawn synyry dolmu?.");
 	GetPlayerPos(playerid, SpawnData[i][spawnX], SpawnData[i][spawnY], SpawnData[i][spawnZ]);
 	GetPlayerFacingAngle(playerid, SpawnData[i][spawnA]);
 	SpawnData[i][spawnPickup] = CreateDynamicPickup(1239, 1, SpawnData[i][spawnX], SpawnData[i][spawnY], SpawnData[i][spawnZ], 0, 0, -1);
 	new str[256];
-	format(str, sizeof(str), "{2590D4}Spawn Noktasý\n{FFFFFF}%s",GetZoneName(SpawnData[i][spawnX], SpawnData[i][spawnY], SpawnData[i][spawnZ]));
+	format(str, sizeof(str), "{2590D4}Spawn Noktası\n{FFFFFF}%s",GetZoneName(SpawnData[i][spawnX], SpawnData[i][spawnY], SpawnData[i][spawnZ]));
 	SpawnData[i][spawn3D] = CreateDynamic3DTextLabel(str, 0xFFFFFFFF, SpawnData[i][spawnX], SpawnData[i][spawnY], SpawnData[i][spawnZ], 50.0, INVALID_PLAYER_ID, INVALID_VEHICLE_ID, 0, 0, 0, -1);
 	Iter_Add(SpawnIter, i);
 
@@ -419,7 +422,8 @@ stock SpawnEkle(playerid) {
 	return 1;
 }
 
-stock SpawnSil(spawnid) {
+SpawnSil(spawnid)
+{
 	SpawnData[spawnid][spawnX] = 0.0;
 	SpawnData[spawnid][spawnY] = 0.0;
 	SpawnData[spawnid][spawnZ] = 0.0;
@@ -434,13 +438,30 @@ stock SpawnSil(spawnid) {
 	mysql_tquery(exConnect, query);
 	return 1;
 }
+
+GetZoneName(Float: x, Float: y, Float: z)
+{
+	new zone[28];
+	for(new i = 0; i < sizeof(SAZones); i++)
+	{
+		if(x >= SAZones[i][SAZONE_AREA][0] && x <= SAZones[i][SAZONE_AREA][3] && y >= SAZones[i][SAZONE_AREA][1] && y <= SAZones[i][SAZONE_AREA][4] && z >= SAZones[i][SAZONE_AREA][2] && z <= SAZones[i][SAZONE_AREA][5])
+		{
+			strcat(zone, SAZones[i][SAZONE_NAME]);
+			return zone;
+		}
+	}
+
+	strcat(zone, "Unknown");
+	return zone;
+}
+
 forward SpawnYukle();
 public SpawnYukle()
 {
 	new rows = cache_num_rows();
 	if(!rows)
 	{
-		print("Hata: Spawn noktasi bulunamadi, tekrar baslatýn.");
+		print("Hata: Spawn noktasi bulunamadi, tekrar baslatyn.");
 		mysql_tquery(exConnect, "INSERT INTO `spawnlar` (`ID`, `SpawnX`, `SpawnY`, `SpawnZ`, `SpawnA`) VALUES (0, '0', '5', '0', '90.0000')");
 		SendRconCommand("exit");
 	}else{
@@ -454,7 +475,7 @@ public SpawnYukle()
 			Iter_Add(SpawnIter, x);
 			SpawnData[x][spawnPickup] = CreateDynamicPickup(1239, 1, SpawnData[x][spawnX], SpawnData[x][spawnY], SpawnData[x][spawnZ], 0, 0, -1);
 			new str[256];
-			format(str, sizeof(str), "{2590D4}Spawn Noktasý\n{FFFFFF}%s",GetZoneName(SpawnData[x][spawnX], SpawnData[x][spawnY], SpawnData[x][spawnZ]));
+			format(str, sizeof(str), "{2590D4}Spawn Noktası\n{FFFFFF}%s",GetZoneName(SpawnData[x][spawnX], SpawnData[x][spawnY], SpawnData[x][spawnZ]));
 			SpawnData[x][spawn3D] = CreateDynamic3DTextLabel(str, 0xFFFFFFFF, SpawnData[x][spawnX], SpawnData[x][spawnY], SpawnData[x][spawnZ], 50.0, INVALID_PLAYER_ID, INVALID_VEHICLE_ID, 0, 0, 0, -1);
 			SpawnData[x][spawnIcon] = CreateDynamicMapIcon(SpawnData[x][spawnX], SpawnData[x][spawnY], SpawnData[x][spawnZ], 36, 0, 0, 0, -1, 200.0);
             loaded++;
@@ -469,7 +490,7 @@ public OnFilterScriptInit()
 	mysql_log(ERROR | WARNING);
 	if (exConnect == MYSQL_INVALID_HANDLE || mysql_errno(exConnect) != 0)
 	{
-		print("» MySQL baðlantýsý yapýlamadý «");
+		print("» MySQL bağlantısı yapılamadı «");
 		SendRconCommand("exit");
 		return 1;
 	}
@@ -486,33 +507,18 @@ public OnPlayerSpawn(playerid)
 }
 CMD:spawnekle(playerid, params[])
 {
-	if(!IsPlayerAdmin(playerid)) return SendClientMessage(playerid,-1,"Bu komutu kullanabilmek için admin olmalýsýn.");
+	if(!IsPlayerAdmin(playerid)) return SendClientMessage(playerid,-1,"Bu komutu kullanabilmek için admin olmalysyn.");
 	SpawnEkle(playerid);
 	return 1;
 }
 
 CMD:spawnsil(playerid, params[])
 {
-	if(!IsPlayerAdmin(playerid)) return SendClientMessage(playerid,-1,"Bu komutu kullanabilmek için admin olmalýsýn.");
+	if(!IsPlayerAdmin(playerid)) return SendClientMessage(playerid,-1,"Bu komutu kullanabilmek için admin olmalysyn.");
 	new id;
-	if(sscanf(params, "i", id)) return SendClientMessage(playerid,-1,"Kullaným: /spawnsil [id]");
+	if(sscanf(params, "i", id)) return SendClientMessage(playerid,-1,"Kullanym: /spawnsil [id]");
 	if(!(0 <= id <= MAX_SPAWNS)) return SendClientMessage(playerid,-1,"Geçersiz ID.");
 	if(!Iter_Contains(SpawnIter, id)) return SendClientMessage(playerid,-1,"Böyle bir spawn yok.");
 	SpawnSil(id);
 	return 1;
-}
-stock GetZoneName(Float: x, Float: y, Float: z)
-{
-	new zone[28];
-	for(new i = 0; i < sizeof(SAZones); i++)
-	{
-		if(x >= SAZones[i][SAZONE_AREA][0] && x <= SAZones[i][SAZONE_AREA][3] && y >= SAZones[i][SAZONE_AREA][1] && y <= SAZones[i][SAZONE_AREA][4] && z >= SAZones[i][SAZONE_AREA][2] && z <= SAZones[i][SAZONE_AREA][5])
-		{
-			strcat(zone, SAZones[i][SAZONE_NAME]);
-			return zone;
-		}
-	}
-
-	strcat(zone, "Unknown");
-	return zone;
 }
