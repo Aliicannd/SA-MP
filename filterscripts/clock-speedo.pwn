@@ -1,17 +1,18 @@
+#define FILTERSCRIPT
 #include <a_samp>
 
-new
-	PlayerText:L_draw[MAX_PLAYERS][16],
-	L_color [] =
-	{
-		0xffffffff, 0xCBFFBFff, 0xCBFFBFff,
-		0x94FF7Dff, 0xB5FE63ff, 0xEBFE63ff,
-		0xFFE862ff, 0xFFD362ff, 0xFEB063ff,
-		0xFEA043ff, 0xFEA043ff, 0xFE7B43ff,
-		0xFE7B43ff, 0xFF0606ff, 0xFF0606ff,
-		0xFF0000FF
-	};
-	
+new PlayerText:L_draw[MAX_PLAYERS][16];
+
+new const L_color[] =
+{
+	0xffffffff, 0xCBFFBFff, 0xCBFFBFff,
+	0x94FF7Dff, 0xB5FE63ff, 0xEBFE63ff,
+	0xFFE862ff, 0xFFD362ff, 0xFEB063ff,
+	0xFEA043ff, 0xFEA043ff, 0xFE7B43ff,
+	0xFE7B43ff, 0xFF0606ff, 0xFF0606ff,
+	0xFF0000FF
+};
+
 public OnPlayerConnect(playerid)
 {
     L_draw[playerid][0] = CreatePlayerTextDraw(playerid,45.00, 410.00, "");
