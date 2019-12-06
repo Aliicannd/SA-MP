@@ -1,3 +1,4 @@
+#define FILTERSCRIPT
 #include <a_samp>
 
 #define PRESSED(%0) (((newkeys & (%0)) == (%0)) && ((oldkeys & (%0)) != (%0)))
