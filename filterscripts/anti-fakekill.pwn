@@ -1,9 +1,8 @@
 #define FILTERSCRIPT
-
 #include <a_samp>
 #include <weapon-config>
 
-new FakeKill[MAX_PLAYERS] = INVALID_PLAYER_ID;
+new FakeKill[MAX_PLAYERS] = {INVALID_PLAYER_ID, ...};
 
 public OnPlayerConnect(playerid)
 {
