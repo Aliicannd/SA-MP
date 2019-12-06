@@ -1,18 +1,19 @@
+/*
+		HayGame by ScRaT
+		
+		Topic: https://forum.sa-mp.com/showthread.php?t=394465
+*/
 #define FILTERSCRIPT
-
 #include <a_samp>
 #include <foreach>
 #include <zcmd>
 
 #define ConvertTime(%0,%1,%2,%3,%4) \
-	new \
-	    Float: %0 = floatdiv(%1, 60000) \
-	;\
+	new Float: %0 = floatdiv(%1, 60000); \
 	%2 = floatround(%0, floatround_tozero); \
 	%3 = floatround(floatmul(%0 - %2, 60), floatround_tozero); \
 	%4 = floatround(floatmul(floatmul(%0 - %2, 60) - %3, 1000), floatround_tozero)
 
-#define ORANGE 		0xDB881AAA
 #define HAY_X		4
 #define HAY_Y		4
 #define HAY_Z		30
@@ -21,8 +22,10 @@
 #define SPEED_FACTOR	3000.0
 #define ID_HAY_OBJECT	3374
 
-new bool: JoinedHay[MAX_PLAYERS] = false;
-new HayGameLevel[MAX_PLAYERS] = -1, HayGameTime[MAX_PLAYERS], PlayerText:HAYTD[MAX_PLAYERS];
+new bool:JoinedHay[MAX_PLAYERS] = {false, ...},
+	HayGameLevel[MAX_PLAYERS] = {0, ...},
+	HayGameTime[MAX_PLAYERS],
+	PlayerText:HAYTD[MAX_PLAYERS];
 
 new Speed_xy, Speed_z, Center_x, Center_y;
 new Matrix[HAY_X][HAY_Y][HAY_Z];
@@ -30,17 +33,14 @@ new Hays[HAY_B];
 
 public OnFilterScriptInit()
 {
-	print("\n--------------------------------------");
-	print(" Hay Minigame By ScRaT");
-	print("--------------------------------------\n");
 	RestartEveryThing();
 	return 1;
 }
 public OnPlayerConnect(playerid)
 {
-    HayGameLevel[playerid] = 0;
-    JoinedHay[playerid] = false;
-    
+	HayGameLevel[playerid] = 0;
+	JoinedHay[playerid] = false;
+
 	HAYTD[playerid] = CreatePlayerTextDraw(playerid, 549.000000,397.000000," ");
 	PlayerTextDrawFont(playerid, HAYTD[playerid], 1);
 	PlayerTextDrawSetProportional(playerid, HAYTD[playerid], 1);
@@ -58,16 +58,16 @@ public OnPlayerConnect(playerid)
 
 public OnPlayerSpawn(playerid)
 {
-    JoinedHay[playerid] = false;
-  	SetPlayerWorldBounds(playerid, 20000.0000, -20000.0000, 20000.0000, -20000.0000);
-  	PlayerTextDrawHide(playerid, HAYTD[playerid]);
+	JoinedHay[playerid] = false;
+	SetPlayerWorldBounds(playerid, 20000.0000, -20000.0000, 20000.0000, -20000.0000);
+	PlayerTextDrawHide(playerid, HAYTD[playerid]);
 	return 1;
 }
 
 public OnPlayerDeath(playerid, killerid, reason)
 {
-    PlayerTextDrawHide(playerid, HAYTD[playerid]);
-    JoinedHay[playerid] = false;
+	PlayerTextDrawHide(playerid, HAYTD[playerid]);
+	JoinedHay[playerid] = false;
 	return 1;
 }
 CMD:hay(playerid)
@@ -87,10 +87,10 @@ CMD:hay(playerid)
 	    }
 	    case true:
 	    {
-	        JoinedHay[playerid] = false;
-	        SetPlayerWorldBounds(playerid, 20000.0000, -20000.0000, 20000.0000, -20000.0000);
-	        PlayerTextDrawHide(playerid,HAYTD[playerid]);
-	        SpawnPlayer(playerid);
+			JoinedHay[playerid] = false;
+			SetPlayerWorldBounds(playerid, 20000.0000, -20000.0000, 20000.0000, -20000.0000);
+			PlayerTextDrawHide(playerid,HAYTD[playerid]);
+			SpawnPlayer(playerid);
 		}
 	}
 	return 1;
@@ -245,7 +245,7 @@ public TimerScore ()
 forward TDScore();
 public TDScore()
 {
-    TimerScore();
+	TimerScore();
 	new Level,string[256],PlayerN[MAX_PLAYER_NAME];
 	foreach(new i: Player)
 	{
@@ -260,7 +260,7 @@ public TDScore()
 			{
 				GetPlayerName(i, PlayerN, sizeof(PlayerN));
 				format(string, sizeof(string),"[HAY] %s Finished The Hay Minigame In %02d Min %02d Sec", PlayerN, tH, tM, tS);
-				SendClientMessageToAll(ORANGE,string);
+				SendClientMessageToAll(0xDB881AAA,string);
 				PlayerTextDrawHide(i, HAYTD[i]);
 				SetPlayerPos(i,0,0,0);
 				SpawnPlayer(i);
