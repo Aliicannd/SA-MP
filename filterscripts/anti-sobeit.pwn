@@ -1,14 +1,18 @@
+#define FILTERSCRIPT
 #include <a_samp>
 
-new bool:SobSpawn[MAX_PLAYERS], SobVeh[MAX_PLAYERS], SobTimer[MAX_PLAYERS];
+new bool:SobSpawn[MAX_PLAYERS] = {false, ...}, 
+	 SobVeh[MAX_PLAYERS], 
+	 SobTimer[MAX_PLAYERS] = {-1, ...};
+
 public OnPlayerConnect(playerid)
 {
-    SobSpawn[playerid] = false;
+	SobSpawn[playerid] = false;
 	return 1;
 }
 public OnPlayerDisconnect(playerid, reason)
 {
-	KillTimer(SobTimer[playerid]);
+	if(SobTimer[playerid] != -1) KillTimer(SobTimer[playerid]);
 	return 1;
 }
 public OnPlayerSpawn(playerid)
@@ -47,5 +51,6 @@ public AntiS0bek(pID)
   		SobSpawn[pID] = true;
 	  	SpawnPlayer(pID);
    	}
+	SobTimer[playerid] = -1;
 	return 1;
 }
