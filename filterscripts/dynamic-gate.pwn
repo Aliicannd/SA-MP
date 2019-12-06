@@ -57,7 +57,7 @@ new
 
 new GateStates[2][16] = {"{E74C3C}Closed", "{2ECC71}Open"};
 
-stock GetXYInFrontOfPlayer(playerid, &Float:x, &Float:y, Float:distance)
+GetXYInFrontOfPlayer(playerid, &Float:x, &Float:y, Float:distance)
 {
 	new Float:a;
 	GetPlayerPos(playerid, x, y, a);
@@ -70,7 +70,7 @@ stock GetXYInFrontOfPlayer(playerid, &Float:x, &Float:y, Float:distance)
 	y += (distance * floatcos(-a, degrees));
 }
 
-stock GetClosestGate(playerid, Float: range = 5.0)
+GetClosestGate(playerid, Float: range = 5.0)
 {
 	new id = -1, Float: playerdist, Float: tempdist = 9999.0;
 	foreach(new i : Gates)
@@ -86,7 +86,7 @@ stock GetClosestGate(playerid, Float: range = 5.0)
 	return id;
 }
 
-stock SetGateState(id, gate_state, move = 1)
+SetGateState(id, gate_state, move = 1)
 {
 	new string[32];
 	format(string, sizeof(string), "Gate #%d\n%s", id, GateStates[gate_state]);
@@ -99,7 +99,7 @@ stock SetGateState(id, gate_state, move = 1)
 		{
 			if(gate_state == GATE_STATE_CLOSED)
 			{
-	        	MoveDynamicObject(GateData[id][GateObject], GateData[id][GatePos][0], GateData[id][GatePos][1], GateData[id][GatePos][2], MOVE_SPEED, GateData[id][GateRot][0], GateData[id][GateRot][1], GateData[id][GateRot][2]);
+				MoveDynamicObject(GateData[id][GateObject], GateData[id][GatePos][0], GateData[id][GatePos][1], GateData[id][GatePos][2], MOVE_SPEED, GateData[id][GateRot][0], GateData[id][GateRot][1], GateData[id][GateRot][2]);
 			}else
 			{
 				MoveDynamicObject(GateData[id][GateObject], GateData[id][GateOpenPos][0], GateData[id][GateOpenPos][1], GateData[id][GateOpenPos][2], MOVE_SPEED, GateData[id][GateOpenRot][0], GateData[id][GateOpenRot][1], GateData[id][GateOpenRot][2]);
@@ -109,7 +109,7 @@ stock SetGateState(id, gate_state, move = 1)
 		{
 			if(gate_state == GATE_STATE_CLOSED)
 			{
-	        	SetDynamicObjectPos(GateData[id][GateObject], GateData[id][GatePos][0], GateData[id][GatePos][1], GateData[id][GatePos][2]);
+				SetDynamicObjectPos(GateData[id][GateObject], GateData[id][GatePos][0], GateData[id][GatePos][1], GateData[id][GatePos][2]);
 				SetDynamicObjectRot(GateData[id][GateObject], GateData[id][GateRot][0], GateData[id][GateRot][1], GateData[id][GateRot][2]);
 			}else
 			{
@@ -121,7 +121,7 @@ stock SetGateState(id, gate_state, move = 1)
 	return 1;
 }
 
-stock ToggleGateState(id, move = 1)
+ToggleGateState(id, move = 1)
 {
 	if(GateData[id][GateState] == GATE_STATE_CLOSED)
 	{
@@ -133,7 +133,7 @@ stock ToggleGateState(id, move = 1)
 	return 1;
 }
 
-stock ShowEditMenu(playerid, id)
+ShowEditMenu(playerid, id)
 {
 	new string[128];
 	format(string, sizeof(string), "Gate State\t%s\nGate Password\t%s\nEdit Gate Position\nEdit Opening Position\nRemove Gate", GateStates[ GateData[id][GateState] ], GateData[id][GatePassword]);
@@ -141,7 +141,7 @@ stock ShowEditMenu(playerid, id)
 	return 1;
 }
 
-stock SaveGate(id)
+SaveGate(id)
 {
 	new query[512];
 	mysql_format(GateHandle, query, sizeof(query), "UPDATE gates SET password='%e', def_posx=%f, def_posy=%f, def_posz=%f, def_rotx=%f, def_roty=%f, def_rotz=%f, open_posx=%f, open_posy=%f, open_posz=%f, open_rotx=%f, open_roty=%f, open_rotz=%f WHERE id=%d",
@@ -444,7 +444,7 @@ CMD:creategate(playerid, params[])
 	if(id == -1) return SendClientMessage(playerid, 0xE74C3CFF, "ERROR: {FFFFFF}Gate limit reached, you can't place any more gates.");
 	new model, password[GATE_PASS_LEN];
 	if(sscanf(params, "iS()["#GATE_PASS_LEN"]", model, password)) return SendClientMessage(playerid, 0xF39C12FF, "USAGE: {FFFFFF}/creategate [model id] [password (optional)]");
-	
+
 	GateData[id][GateModel] = model;
 	format(GateData[id][GatePassword], GATE_PASS_LEN, "%s", password);
 
@@ -465,7 +465,7 @@ CMD:creategate(playerid, params[])
 	format(string, sizeof(string), "Gate #%d\n%s", id, GateStates[GATE_STATE_CLOSED]);
 	GateData[id][GateLabel] = CreateDynamic3DTextLabel(string, 0xECF0F1FF, x, y, z, 10.0);
 	Iter_Add(Gates, id);
-	
+
 	new query[256];
 	mysql_format(GateHandle, query, sizeof(query), "INSERT INTO gates (id, model, password, def_posx, def_posy, def_posz) VALUES (%d, %d, '%e', %f, %f, %f)", id, model, password, x, y, z);
 	mysql_tquery(GateHandle, query);
