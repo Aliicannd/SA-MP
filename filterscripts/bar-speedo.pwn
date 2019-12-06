@@ -1,17 +1,18 @@
+#define FILTERSCRIPT
 #include <a_samp>
 
-new
-	PlayerText:HizBar[MAX_PLAYERS][16],
-	PlayerText:HizText[MAX_PLAYERS],
-	L_color [] =
-	{
-		0xffffffff, 0xCBFFBFff, 0xCBFFBFff,
-		0x94FF7Dff, 0xB5FE63ff, 0xEBFE63ff,
-		0xFFE862ff, 0xFFD362ff, 0xFEB063ff,
-		0xFEA043ff, 0xFEA043ff, 0xFE7B43ff,
-		0xFE7B43ff, 0xFF0606ff, 0xFF0606ff,
-		0xFF0000FF, 0xFF0000FF
-	};
+new 	PlayerText:HizBar[MAX_PLAYERS][16],
+	PlayerText:HizText[MAX_PLAYERS];
+	
+new	const L_color[] =
+{
+	0xffffffff, 0xCBFFBFff, 0xCBFFBFff,
+	0x94FF7Dff, 0xB5FE63ff, 0xEBFE63ff,
+	0xFFE862ff, 0xFFD362ff, 0xFEB063ff,
+	0xFEA043ff, 0xFEA043ff, 0xFE7B43ff,
+	0xFE7B43ff, 0xFF0606ff, 0xFF0606ff,
+	0xFF0000FF, 0xFF0000FF
+};
 
 public OnPlayerConnect(playerid)
 {
@@ -55,6 +56,7 @@ public OnPlayerConnect(playerid)
 	PlayerTextDrawSetSelectable(playerid,HizText[playerid], 0);
 	return 1;
 }
+
 public OnPlayerDisconnect(playerid, reason)
 {
 	for (new i = 1; i != 16; i++)
@@ -63,12 +65,13 @@ public OnPlayerDisconnect(playerid, reason)
 		PlayerTextDrawDestroy(playerid,HizBar[playerid][i]) ;
 	}
  	PlayerTextDrawHide(playerid, HizText[playerid]);
-	PlayerTextDrawDestroy(playerid,HizText[playerid]) ;
+	PlayerTextDrawDestroy(playerid, HizText[playerid]);
 	return 1;
 }
+
 public OnPlayerUpdate(playerid)
 {
-	if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
+	if(GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
 	{
 		new Float:L_update[4],total_speed, str[24];
 		GetVehicleVelocity(GetPlayerVehicleID(playerid), L_update[0], L_update[1], L_update[2]) ;
@@ -90,6 +93,7 @@ public OnPlayerUpdate(playerid)
 	}
 	return 1;
 }
+
 public OnPlayerStateChange(playerid, newstate, oldstate)
 {
 	if(newstate == PLAYER_STATE_DRIVER)
@@ -110,7 +114,8 @@ public OnPlayerStateChange(playerid, newstate, oldstate)
 	}
 	return 1;
 }
-stock GetVehicleSpeed(vehicleid)
+
+GetVehicleSpeed(vehicleid)
 {
 	new Float:Pos[3], Float:ARRAY;
 	GetVehicleVelocity(vehicleid, Pos[0], Pos[1], Pos[2]);
